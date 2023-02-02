@@ -88,9 +88,11 @@ button_sub.grid(row=3, column=3, padx = 2, pady = 2)
 button_add = tk.Button(root, text='+', width=5, height=2, font=("Arial Black", 20), background='#2b2b2b', foreground='White', command=lambda: enter('+'))
 button_add.grid(row=4, column=3, padx = 2, pady = 2)
         
-button_eq = tk.Button(root, text='=', width=11, height=2, font=("Arial Black", 20), background='#2b2b2b', foreground='White', command=lambda: enter('='))
-button_eq.grid(row=4, column=1, padx = 2, pady = 2, columnspan=2)
+button_eq = tk.Button(root, text='=', width=5, height=2, font=("Arial Black", 20), background='#2b2b2b', foreground='White', command=lambda: enter('='))
+button_eq.grid(row=4, column=2, padx = 2, pady = 2)
         
+button_pt = tk.Button(root, text='.', width=5, height=2, font=("Arial Black", 20), background='#2b2b2b', foreground='White', command=lambda: enter('.'))
+button_pt.grid(row=4, column=1, padx = 2, pady = 2)
                
 #MainLoop
 root.mainloop()

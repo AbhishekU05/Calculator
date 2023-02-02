@@ -1,23 +1,48 @@
 import tkinter as tk
 from tkinter.ttk import *
 from PIL import Image, ImageTk
+import keyboard
+
+
+def callback():
+    global flag
+    if entry.get() == '':
+        root.after(10, callback)
+        return
+    input = entry.get()[len(entry.get())-1]
+    if input == '\n' or input == '=':
+        current = entry.get()[:len(entry.get())-1]
+        new = eval(current)
+        flag = False
+        entry.delete(0, "end")
+        entry.insert(0, new)
+    if input.isalpha() or (input.isdigit() == False and (input != '+' and input != '-' and input != '*' and input != '/' and input != '=' and input != '.')):
+        entry.delete(len(entry.get())-1, "end")
+    root.after(10, callback)
+    return
+
 
 def enter(val):
     global flag
-    if flag == False:
-        entry.delete(0, "end")
-        new = str(val)
-        entry.insert(0, new)
-        flag = True
-    else:
-        current = entry.get()
-        if val == '=':
-            new = eval(current)
-            flag = False
+    try:
+        if flag == False:
+            entry.delete(0, "end")
+            new = str(val)
+            entry.insert(0, new)
+            flag = True
         else:
-            new = current + str(val)
+            current = entry.get()
+            if val == '=':
+                new = eval(current)
+                flag = False
+            else:
+                new = current + str(val)
+            entry.delete(0, "end")
+            entry.insert(0, new)
+    except:
         entry.delete(0, "end")
-        entry.insert(0, new)
+        entry.insert(0, "Error")
+        flag = False
 
 flag = True
 
@@ -29,10 +54,12 @@ photo = ImageTk.PhotoImage(icon)
 root.wm_iconphoto(False, photo)      
 root.configure(background = 'Black')
 root.title("Calculator")
+#root.geometry('400x400')
+root.resizable(False,False)
 
 
 #Entry field
-entry = Entry(root, width=37, background='Blue', font='Arial')
+entry = Entry(root, width=11, background='Blue', font=('Arial', 50))
 entry.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
 
 
@@ -93,7 +120,9 @@ button_eq.grid(row=4, column=2, padx = 2, pady = 2)
         
 button_pt = tk.Button(root, text='.', width=5, height=2, font=("Arial Black", 20), background='#2b2b2b', foreground='White', command=lambda: enter('.'))
 button_pt.grid(row=4, column=1, padx = 2, pady = 2)
-               
+
+
 #MainLoop
+root.after(10, callback)
 root.mainloop()
 
